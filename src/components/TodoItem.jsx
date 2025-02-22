@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import {
@@ -14,6 +14,8 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [editText, setEditText] = useState(todo.text);
   const [showInfo, setShowInfo] = useState(false);
+  const menuRef = useRef(null);
+  const infoRef = useRef(null);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
@@ -25,6 +27,17 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
     transition,
     touchAction: "none",
   };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setShowInfo(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleUpdate = () => {
     if (editText.trim()) {
@@ -56,15 +69,34 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           </svg>
         </button>
 
-        <input
-          type="checkbox"
-          checked={todo.completed}
-          onChange={() => onToggle(todo.id)}
-          className="w-5 h-5 rounded border-neutral-300 bg-neutral-700 checked:bg-blue-500"
-          aria-label={
-            todo.completed ? "Mark as incomplete" : "Mark as complete"
-          }
-        />
+        <label className="relative flex items-center">
+          <input
+            type="checkbox"
+            checked={todo.completed}
+            onChange={() => onToggle(todo.id)}
+            className="w-5 h-5 rounded border-2 border-neutral-400 bg-transparent 
+             checked:bg-green-500 checked:border-green-500 
+             focus:ring-0 focus:ring-offset-0 
+             appearance-none cursor-pointer 
+             transition-colors duration-200 opacity-0 absolute"
+            aria-label={
+              todo.completed ? "Mark as incomplete" : "Mark as complete"
+            }
+          />
+          <div className="w-5 h-5 rounded border-2 border-neutral-400 flex items-center justify-center">
+            <svg
+              className={`w-3 h-3 text-white transition-opacity duration-200 ${
+                todo.completed ? "opacity-100" : "opacity-0"
+              }`}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+            >
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+        </label>
 
         {/* Todo Text Input/Display */}
         <div className="flex-1 min-w-0">
@@ -74,13 +106,15 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
               onChange={(e) => setEditText(e.target.value)}
               onBlur={handleUpdate}
               onKeyDown={(e) => e.key === "Enter" && handleUpdate()}
-              className="w-full flex-1 bg-transparent focus:outline-none"
+              className="w-full bg-transparent focus:outline-none focus:ring-2 focus:ring-neutral-500 rounded py-1 px-2"
               autoFocus
             />
           ) : (
             <span
-              className={`flex-1 text-neutral-100 ${
-                todo.completed ? "line-through text-neutral-400" : ""
+              className={`block truncate ${
+                todo.completed
+                  ? "line-through text-neutral-400"
+                  : "text-neutral-100"
               }`}
               onDoubleClick={() => setEditing(true)}
             >
@@ -94,13 +128,13 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       <div className="flex items-center gap-3 ml-4">
         <button
           onClick={() => setShowInfo(!showInfo)}
-          className="text-neutral-400 hover:text-white hidden md:inline-block"
+          className="text-neutral-400 hover:text-white"
           aria-label="Task information"
         >
           <InformationCircleIcon className="w-5 h-5" />
         </button>
 
-        <Menu as="div" className="relative">
+        <Menu as="div" className="relative" ref={menuRef}>
           <Menu.Button
             className="text-neutral-400 hover:text-white"
             aria-label="Task actions"
@@ -116,13 +150,13 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Menu.Items className="absolute right-0 mt-2 w-48 bg-neutral-700 rounded-lg shadow-lg z-50 focus:outline-none">
+            <Menu.Items className="absolute right-0 mt-2 w-48 bg-neutral-800 rounded-lg shadow-lg z-50 focus:outline-none border border-neutral-700">
               <Menu.Item>
                 {({ active }) => (
                   <button
                     onClick={() => setEditing(true)}
                     className={`${
-                      active ? "bg-neutral-600" : ""
+                      active ? "bg-neutral-700" : ""
                     } w-full px-4 py-3 text-left rounded-t-lg flex items-center gap-2`}
                   >
                     <PencilIcon className="w-4 h-4" />
@@ -135,7 +169,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
                   <button
                     onClick={() => onDelete(todo.id)}
                     className={`${
-                      active ? "bg-neutral-600" : ""
+                      active ? "bg-neutral-700" : ""
                     } w-full px-4 py-3 text-left rounded-b-lg text-red-400 flex items-center gap-2`}
                   >
                     <TrashIcon className="w-4 h-4" />
@@ -150,7 +184,10 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
 
       {/* Information Panel */}
       {showInfo && (
-        <div className="hidden md:block absolute top-full left-0 w-full p-4 bg-neutral-700 rounded-lg mt-2 z-50 shadow-xl">
+        <div
+          ref={infoRef}
+          className="absolute top-full left-0 w-full p-4 bg-neutral-800 rounded-lg mt-2 z-50 shadow-xl"
+        >
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-neutral-400">Created:</span>
