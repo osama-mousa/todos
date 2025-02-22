@@ -12,6 +12,19 @@
 body {
   color: rgb(var(--foreground));
   background-color: rgb(var(--background));
+  @apply bg-neutral-900 text-neutral-100;
+}
+
+input[type="checkbox"] {
+  @apply rounded border-neutral-300 bg-neutral-700;
+}
+
+input[type="checkbox"]:checked {
+  /* background-image: none; */
+}
+
+input[type="checkbox"]:checked ~ svg {
+  opacity: 1;
 }
 
 .handle {
