@@ -22,22 +22,25 @@ export default function Home() {
     e.preventDefault();
     if (!input.trim()) return;
 
+    const allTodos = getTodos();
     const newTodo = {
       id: Date.now(),
       text: input.trim(),
       completed: false,
       createdAt: new Date().toISOString(),
       updatedAt: null,
-      order: todos.length,
+      order: allTodos.length,
     };
 
-    setTodos([...todos, newTodo]);
-    saveTodos([...todos, newTodo]);
+    const updatedTodos = [...allTodos, newTodo];
+    saveTodos(updatedTodos);
+    setTodos(updatedTodos.filter((todo) => !todo.completed));
     setInput("");
   };
 
   const toggleTodo = (id) => {
-    const updatedTodos = todos.map((todo) => {
+    const allTodos = getTodos();
+    const updatedTodos = allTodos.map((todo) => {
       if (todo.id === id) {
         return {
           ...todo,
@@ -48,12 +51,19 @@ export default function Home() {
       }
       return todo;
     });
-    setTodos(updatedTodos);
+
     saveTodos(updatedTodos);
+    setTodos(updatedTodos.filter((todo) => !todo.completed));
+
+    if (updatedTodos.find((todo) => todo.id === id)?.completed) {
+      const refreshedTodos = getTodos().filter((todo) => !todo.completed);
+      setTodos(refreshedTodos);
+    }
   };
 
   const updateTodo = (id, newText) => {
-    const updatedTodos = todos.map((todo) =>
+    const allTodos = getTodos();
+    const updatedTodos = allTodos.map((todo) =>
       todo.id === id
         ? {
             ...todo,
@@ -62,30 +72,36 @@ export default function Home() {
           }
         : todo
     );
-    setTodos(updatedTodos);
+
     saveTodos(updatedTodos);
+    setTodos(updatedTodos.filter((todo) => !todo.completed));
   };
 
   const deleteTodo = (id) => {
-    const filteredTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(filteredTodos);
-    saveTodos(filteredTodos);
+    const allTodos = getTodos();
+    const updatedTodos = allTodos.filter((todo) => todo.id !== id);
+    saveTodos(updatedTodos);
+    setTodos(updatedTodos.filter((todo) => !todo.completed));
   };
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (active.id !== over.id) {
-      const oldIndex = todos.findIndex((todo) => todo.id === active.id);
-      const newIndex = todos.findIndex((todo) => todo.id === over.id);
-      const newTodos = arrayMove(todos, oldIndex, newIndex);
-      setTodos(newTodos);
+      const allTodos = getTodos();
+      const activeIndex = allTodos.findIndex((todo) => todo.id === active.id);
+      const overIndex = allTodos.findIndex((todo) => todo.id === over.id);
+
+      const newTodos = arrayMove(allTodos, activeIndex, overIndex);
       saveTodos(newTodos);
+      setTodos(newTodos.filter((todo) => !todo.completed));
     }
   };
 
   return (
     <div className="w-full max-w-2xl">
-      <h1 className="text-3xl font-bold mb-8 text-center">Todos</h1>
+      <h1 className="text-4xl text-neutral-100 font-bold mt-16 mb-8 text-center">
+        <span className="text-neutral-600">To</span>Dos
+      </h1>
 
       <form onSubmit={handleSubmit} className="mb-8">
         <input

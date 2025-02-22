@@ -39,7 +39,7 @@ export default function CompletedPage() {
         <h1 className="text-3xl font-bold">Completed Todos</h1>
         <button
           onClick={clearAllCompleted}
-          className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded flex items-center gap-2"
+          className="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded flex items-center gap-2"
           disabled={completedTodos.length === 0}
         >
           <TrashIcon className="w-5 h-5" />
