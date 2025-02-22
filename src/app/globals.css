@@ -7,12 +7,17 @@
     --background: 17 24 39;
     --foreground: 255 255 255;
   }
+
+  body {
+    @apply bg-neutral-900 text-neutral-100;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
-body {
-  color: rgb(var(--foreground));
-  background-color: rgb(var(--background));
-  @apply bg-neutral-900 text-neutral-100;
+main {
+  flex: 1;
 }
 
 input[type="checkbox"] {
