@@ -67,8 +67,27 @@ export default function CompletedPage() {
         ))}
 
         {completedTodos.length === 0 && (
-          <div className="p-4 text-center text-neutral-400 justify-center">
-            No completed todos found
+          <div className="flex items-center justify-center h-[calc(50vh-50px)]">
+            <div className="text-center p-4 text-neutral-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="h-8 w-8 mx-auto mb-4 text-neutral-600"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
+                  d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"
+                />
+              </svg>
+              <p className="text-lg">No completed tasks yet</p>
+              <p className="text-sm mt-1">
+                Complete some todos to see them here
+              </p>
+            </div>
           </div>
         )}
       </div>
