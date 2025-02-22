@@ -16,6 +16,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
   const [showInfo, setShowInfo] = useState(false);
   const menuRef = useRef(null);
   const infoRef = useRef(null);
+  const infoButtonRef = useRef(null);
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({
@@ -31,6 +32,13 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setShowInfo(false);
+      }
+      if (
+        infoRef.current &&
+        !infoRef.current.contains(e.target) &&
+        !infoButtonRef.current.contains(e.target)
+      ) {
         setShowInfo(false);
       }
     };
@@ -51,7 +59,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       ref={setNodeRef}
       style={style}
       {...attributes}
-      className="flex items-center justify-between p-4 bg-neutral-800 rounded-lg group relative mb-2
+      className="flex items-center justify-between p-4 bg-neutral-800 rounded-lg relative mb-2
         hover:bg-zinc-800 transition-colors w-full"
     >
       {/* Drag Handle and Checkbox */}
@@ -111,7 +119,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
             />
           ) : (
             <span
-              className={`block truncate ${
+              className={`block break-words overflow-hidden ${
                 todo.completed
                   ? "line-through text-neutral-400"
                   : "text-neutral-100"
@@ -127,11 +135,22 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       {/* Action Buttons */}
       <div className="flex items-center gap-3 ml-4">
         <button
+          ref={infoButtonRef}
           onClick={() => setShowInfo(!showInfo)}
-          className="text-neutral-400 hover:text-white"
+          className="text-neutral-400 hover:text-white relative group"
           aria-label="Task information"
+          //   title="View task details"
         >
           <InformationCircleIcon className="w-5 h-5" />
+
+          {/* Tooltip للـ hover */}
+          <span
+            className="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 
+          bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
+          transition-opacity duration-200 pointer-events-none"
+          >
+            Info
+          </span>
         </button>
 
         <Menu as="div" className="relative" ref={menuRef}>
@@ -186,8 +205,26 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       {showInfo && (
         <div
           ref={infoRef}
-          className="absolute top-full left-0 w-full p-4 bg-neutral-800 rounded-lg mt-2 z-50 shadow-xl"
+          className="absolute top-full left-0 w-full p-4 bg-neutral-800 rounded-lg mt-2 z-50 shadow-xl border border-neutral-700"
         >
+          <button
+            className="flex w-full items-center justify-end mt-0 mb-2 text-sm text-red-400 hover:text-red-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </button>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-neutral-400">Created:</span>
