@@ -9,7 +9,7 @@ export default function Footer() {
             <p className="text-neutral-400 text-sm">
               Developed by
               <a
-                href="https://example.com"
+                href="https://github.com/osama-mousa/"
                 className="text-zinc-400 hover:text-zinc-300 mx-1.5 transition-colors duration-200"
                 target="_blank"
                 rel="noopener noreferrer"
