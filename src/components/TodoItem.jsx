@@ -106,12 +106,12 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           </svg>
         </button>
 
-        <label className="relative flex items-center">
+        <label className="relative flex items-center group cursor-pointer">
           <input
             type="checkbox"
             checked={localCompleted}
             onChange={handleToggle}
-            className="w-5 h-5 rounded border-2 border-neutral-400 bg-transparent 
+            className="group w-5 h-5 rounded border-2 border-neutral-400 bg-transparent 
              checked:bg-green-500 checked:border-green-500 
              focus:ring-0 focus:ring-offset-0 
              appearance-none cursor-pointer 
@@ -120,6 +120,13 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
               localCompleted ? "Mark as incomplete" : "Mark as complete"
             }
           />
+          <span
+            className="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 
+          bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
+          transition-opacity duration-200 pointer-events-none"
+          >
+            Complete
+          </span>
           <div
             className={`w-5 h-5 rounded border-2 flex items-center justify-center
             ${
@@ -190,10 +197,17 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           {({ open }) => (
             <>
               <Menu.Button
-                className="text-neutral-400 hover:text-white"
+                className="text-neutral-400 hover:text-white group"
                 aria-label="Task actions"
               >
                 <EllipsisVerticalIcon className="w-5 h-5" />
+                <span
+                  className="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 
+          bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
+          transition-opacity duration-200 pointer-events-none"
+                >
+                  Actions
+                </span>
               </Menu.Button>
 
               <Transition
