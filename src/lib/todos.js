@@ -1,12 +1,21 @@
 export const getTodos = () => {
   if (typeof window !== "undefined") {
-    return JSON.parse(localStorage.getItem("todos")) || [];
+    try {
+      return JSON.parse(localStorage.getItem("todos")) || [];
+    } catch (error) {
+      console.error("Error loading todos:", error);
+      return [];
+    }
   }
   return [];
 };
 
 export const saveTodos = (todos) => {
   if (typeof window !== "undefined") {
-    localStorage.setItem("todos", JSON.stringify(todos));
+    try {
+      localStorage.setItem("todos", JSON.stringify(todos));
+    } catch (error) {
+      console.error("Error saving todos:", error);
+    }
   }
 };
