@@ -14,6 +14,8 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [editText, setEditText] = useState(todo.text);
   const [showInfo, setShowInfo] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  const [localCompleted, setLocalCompleted] = useState(todo.completed);
   const menuRef = useRef(null);
   const infoRef = useRef(null);
   const infoButtonRef = useRef(null);
@@ -54,6 +56,18 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
     setEditing(false);
   };
 
+  const handleToggle = () => {
+    // تحديث الحالة المحلية فورًا
+    setLocalCompleted(!localCompleted);
+
+    // بدء تأثير الإخفاء بعد تأخير
+    setIsExiting(true);
+    setTimeout(() => {
+      onToggle(todo.id);
+      setIsExiting(false);
+    }, 1000);
+  };
+
   return (
     <div
       ref={setNodeRef}
@@ -80,21 +94,28 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
         <label className="relative flex items-center">
           <input
             type="checkbox"
-            checked={todo.completed}
-            onChange={() => onToggle(todo.id)}
+            checked={localCompleted}
+            onChange={handleToggle}
             className="w-5 h-5 rounded border-2 border-neutral-400 bg-transparent 
              checked:bg-green-500 checked:border-green-500 
              focus:ring-0 focus:ring-offset-0 
              appearance-none cursor-pointer 
              transition-colors duration-200 opacity-0 absolute"
             aria-label={
-              todo.completed ? "Mark as incomplete" : "Mark as complete"
+              localCompleted ? "Mark as incomplete" : "Mark as complete"
             }
           />
-          <div className="w-5 h-5 rounded border-2 border-neutral-400 flex items-center justify-center">
+          <div
+            className={`w-5 h-5 rounded border-2 flex items-center justify-center
+            ${
+              localCompleted
+                ? "bg-green-500 border-green-500"
+                : "bg-transparent border-neutral-400"
+            }`}
+          >
             <svg
               className={`w-3 h-3 text-white transition-opacity duration-200 ${
-                todo.completed ? "opacity-100" : "opacity-0"
+                localCompleted ? "opacity-100" : "opacity-0"
               }`}
               viewBox="0 0 24 24"
               fill="none"
@@ -120,7 +141,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           ) : (
             <span
               className={`block break-words overflow-hidden ${
-                todo.completed
+                localCompleted
                   ? "line-through text-neutral-400"
                   : "text-neutral-100"
               }`}
@@ -207,9 +228,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           ref={infoRef}
           className="absolute top-full left-0 w-full p-4 bg-neutral-800 rounded-lg mt-2 z-50 shadow-xl border border-neutral-700"
         >
-          <button
-            className="flex w-full items-center justify-end mt-0 mb-2 text-sm text-red-400 hover:text-red-300"
-          >
+          <button className="flex w-full items-center justify-end mt-0 mb-2 text-sm text-red-400 hover:text-red-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
