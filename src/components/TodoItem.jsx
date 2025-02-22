@@ -1,3 +1,4 @@
+// src/components/TodoItem.jsx
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useSortable } from "@dnd-kit/sortable";
@@ -16,19 +17,28 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
   const [showInfo, setShowInfo] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [localCompleted, setLocalCompleted] = useState(todo.completed);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const infoRef = useRef(null);
   const infoButtonRef = useRef(null);
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({
-      id: todo.id,
-    });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: todo.id,
+    animateLayoutChanges: () => false,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
-    touchAction: "none",
+    transition: isDragging ? "none" : transition,
+    touchAction: "manipulation",
+    opacity: isDragging ? 0.8 : 1,
   };
 
   useEffect(() => {
@@ -57,11 +67,9 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
   };
 
   const handleToggle = () => {
-    // تحديث الحالة المحلية فورًا
     setLocalCompleted(!localCompleted);
-
-    // بدء تأثير الإخفاء بعد تأخير
     setIsExiting(true);
+
     setTimeout(() => {
       onToggle(todo.id);
       setIsExiting(false);
@@ -73,15 +81,22 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       ref={setNodeRef}
       style={style}
       {...attributes}
-      className="flex items-center justify-between p-4 bg-neutral-800 rounded-lg relative mb-2
-        hover:bg-zinc-800 transition-colors w-full"
+      className={`flex items-center justify-between p-4 bg-neutral-800 rounded-lg relative mb-2
+      hover:bg-zinc-800 transition-transform duration-150 ${
+        isDragging ? "shadow-xl z-50 scale-105" : "shadow-none"
+      } ${isMenuOpen ? "z-[70]" : showInfo ? "z-[60]" : ""} 
+      ${
+        isExiting
+          ? "opacity-0 scale-95 !mb-0 fade-out"
+          : "opacity-100 scale-100"
+      }`}
     >
       {/* Drag Handle and Checkbox */}
       <div className="flex items-center gap-3 flex-1">
         <button
           {...listeners}
           aria-label="Drag handle"
-          className="handle cursor-grab active:cursor-grabbing p-2 hover:bg-neutral-700 rounded-md"
+          className="handle cursor-grab active:cursor-grabbing p-2 hover:bg-neutral-700 rounded-md touch-pan-x"
         >
           <svg className="w-4 h-4 text-neutral-400" viewBox="0 0 24 24">
             <path
@@ -135,7 +150,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
               onChange={(e) => setEditText(e.target.value)}
               onBlur={handleUpdate}
               onKeyDown={(e) => e.key === "Enter" && handleUpdate()}
-              className="w-full bg-transparent focus:outline-none focus:ring-2 focus:ring-neutral-500 rounded py-1 px-2"
+              className="w-full bg-transparent focus:outline-none focus:ring-1 focus:ring-neutral-700 rounded py-1 px-2"
               autoFocus
             />
           ) : (
@@ -160,11 +175,8 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           onClick={() => setShowInfo(!showInfo)}
           className="text-neutral-400 hover:text-white relative group"
           aria-label="Task information"
-          //   title="View task details"
         >
           <InformationCircleIcon className="w-5 h-5" />
-
-          {/* Tooltip للـ hover */}
           <span
             className="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 
           bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
@@ -175,50 +187,55 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
         </button>
 
         <Menu as="div" className="relative" ref={menuRef}>
-          <Menu.Button
-            className="text-neutral-400 hover:text-white"
-            aria-label="Task actions"
-          >
-            <EllipsisVerticalIcon className="w-5 h-5" />
-          </Menu.Button>
+          {({ open }) => (
+            <>
+              <Menu.Button
+                className="text-neutral-400 hover:text-white"
+                aria-label="Task actions"
+              >
+                <EllipsisVerticalIcon className="w-5 h-5" />
+              </Menu.Button>
 
-          <Transition
-            enter="transition duration-100 ease-out"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
-          >
-            <Menu.Items className="absolute right-0 mt-2 w-48 bg-neutral-800 rounded-lg shadow-lg z-50 focus:outline-none border border-neutral-700">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    onClick={() => setEditing(true)}
-                    className={`${
-                      active ? "bg-neutral-700" : ""
-                    } w-full px-4 py-3 text-left rounded-t-lg flex items-center gap-2`}
-                  >
-                    <PencilIcon className="w-4 h-4" />
-                    Edit
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    onClick={() => onDelete(todo.id)}
-                    className={`${
-                      active ? "bg-neutral-700" : ""
-                    } w-full px-4 py-3 text-left rounded-b-lg text-red-400 flex items-center gap-2`}
-                  >
-                    <TrashIcon className="w-4 h-4" />
-                    Delete
-                  </button>
-                )}
-              </Menu.Item>
-            </Menu.Items>
-          </Transition>
+              <Transition
+                enter="transition duration-100 ease-out"
+                enterFrom="transform scale-95 opacity-0"
+                enterTo="transform scale-100 opacity-100"
+                leave="transition duration-75 ease-out"
+                leaveFrom="transform scale-100 opacity-100"
+                leaveTo="transform scale-95 opacity-0"
+              >
+                <Menu.Items className="absolute right-0 bottom-full mb-2 w-48 bg-neutral-800 rounded-lg shadow-lg z-[80] focus:outline-none border border-neutral-700">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => setEditing(true)}
+                        className={`${
+                          active ? "bg-neutral-700" : ""
+                        } w-full px-4 py-3 text-left rounded-t-lg flex items-center gap-2`}
+                      >
+                        <PencilIcon className="w-4 h-4" />
+                        Edit
+                      </button>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => onDelete(todo.id)}
+                        className={`${
+                          active ? "bg-neutral-700" : ""
+                        } w-full px-4 py-3 text-left rounded-b-lg text-red-400 flex items-center gap-2`}
+                      >
+                        <TrashIcon className="w-4 h-4" />
+                        Delete
+                      </button>
+                    )}
+                  </Menu.Item>
+                </Menu.Items>
+              </Transition>
+              <div className={`${open ? "z-[70]" : ""}`}></div>
+            </>
+          )}
         </Menu>
       </div>
 
@@ -226,16 +243,20 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       {showInfo && (
         <div
           ref={infoRef}
-          className="absolute top-full left-0 w-full p-4 bg-neutral-800 rounded-lg mt-2 z-50 shadow-xl border border-neutral-700"
+          className={`absolute top-full left-0 w-full p-4 bg-neutral-800 rounded-lg mt-2 shadow-xl border border-neutral-700
+           ${isExiting ? "z-[50] opacity-70" : "z-[70] opacity-100"}`}
         >
-          <button className="flex w-full items-center justify-end mt-0 mb-2 text-sm text-red-400 hover:text-red-300">
+          <button
+            onClick={() => setShowInfo(false)}
+            className="flex w-full items-center justify-end mt-0 mb-2 text-sm text-red-400 hover:text-red-300"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6"
+              className="size-5"
             >
               <path
                 strokeLinecap="round"
