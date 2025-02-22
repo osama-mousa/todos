@@ -13,7 +13,12 @@ export const metadata = {
       { url: "/icons/favicon.ico" },
       { url: "/icons/todos.png", sizes: "192x192", type: "image/png" },
     ],
-    apple: "/icons/todos.png",
+    apple: [{ url: "/icons/todos.png", sizes: "180x180", type: "image/png" }],
+  },
+  appleWebApp: {
+    capable: true,
+    title: "ToDos",
+    statusBarStyle: "black-translucent",
   },
 };
 
