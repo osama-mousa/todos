@@ -23,12 +23,12 @@ input[type="checkbox"]:checked {
   /* background-image: none; */
 }
 
-input[type="checkbox"]:checked ~ svg {
+input[type="checkbox"]:checked~svg {
   opacity: 1;
 }
 
-input[type="checkbox"]:checked + div {
-  @apply bg-green-600 border-green-600;
+input[type="checkbox"]:checked+div {
+  @apply bg-green-700 border-green-700;
 }
 
 .handle {
@@ -49,4 +49,20 @@ input[type="checkbox"]:checked + div {
   .sidebar {
     @apply w-64 h-screen bg-gray-800 p-4 fixed left-0 top-0 transition-transform z-40;
   }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-out forwards;
 }
