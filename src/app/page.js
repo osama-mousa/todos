@@ -8,6 +8,7 @@ import {
 } from "@dnd-kit/sortable";
 import TodoItem from "@/components/TodoItem";
 import { saveTodos, getTodos } from "@/lib/todos";
+import Image from "next/image";
 
 export default function Home() {
   const [todos, setTodos] = useState([]);
@@ -99,9 +100,15 @@ export default function Home() {
 
   return (
     <div className="w-full max-w-2xl">
-      <h1 className="text-4xl text-neutral-100 font-bold mt-16 mb-8 text-center">
-        <span className="text-neutral-600">To</span>Dos
-      </h1>
+      <div className="flex items-center justify-center">
+        <Image
+        className="flex mt-16 mb-8 text-center h-10 w-auto"
+        src={"/icons/hero.png"}
+        quality={100}
+        height={10000}
+        width={10000}
+        alt={"ToDos"} />
+      </div>
 
       <form onSubmit={handleSubmit} className="mb-8">
         <input
