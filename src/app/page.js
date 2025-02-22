@@ -102,7 +102,7 @@ export default function Home() {
     <div className="w-full max-w-2xl">
       <div className="flex items-center justify-center">
         <Image
-        className="flex mt-16 mb-8 text-center h-10 w-auto"
+        className="flex mt-16 mb-8 text-center h-6 md:h-10 w-auto"
         src={"/icons/hero.png"}
         quality={100}
         height={10000}
