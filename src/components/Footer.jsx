@@ -1,6 +1,6 @@
 export default function Footer() {
     return (
-      <footer className="w-full mt-16 py-8">
+      <footer className="w-full py-8">
         <div className="max-w-4xl mx-auto px-4">
           <div className="relative responsive-container text-center">
             {/* الخط الفاصل المركزي */}
