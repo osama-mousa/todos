@@ -122,8 +122,8 @@ export default function CompletedPage() {
             className="mr-1 transition-transform duration-300 transform group-hover:-translate-x-1"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M15.75 19.5 8.25 12l7.5-7.5"
             />
           </svg>
