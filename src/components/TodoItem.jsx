@@ -82,7 +82,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       style={style}
       {...attributes}
       className={`flex items-center justify-between p-4 bg-neutral-800 rounded-lg relative mb-2
-      hover:bg-zinc-800 transition-transform duration-150 ${
+      hover:bg-zinc-800 transition-transform duration-150 font-sans ${
         isDragging ? "shadow-xl z-50 scale-105" : "shadow-none"
       } ${isMenuOpen ? "z-[70]" : showInfo ? "z-[60]" : ""} 
       ${
@@ -125,7 +125,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
           transition-opacity duration-200 pointer-events-none"
           >
-            Complete
+            Done
           </span>
           <div
             className={`w-5 h-5 rounded border-2 flex items-center justify-center
