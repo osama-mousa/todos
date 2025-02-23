@@ -9,8 +9,10 @@ import {
 import TodoItem from "@/components/TodoItem";
 import { saveTodos, getTodos } from "@/lib/todos";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
   const inputRef = useRef(null);
@@ -99,47 +101,74 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full max-w-2xl">
-      <div className="flex items-center justify-center">
-        <Image
-        className="flex mt-16 mb-8 text-center h-6 md:h-10 w-auto"
-        src={"/icons/hero.png"}
-        quality={100}
-        height={10000}
-        width={10000}
-        alt={"ToDos"} />
+    <div className="w-full max-w-2xl min-h-[80vh] flex flex-col font-sans">
+      {/* المحتوى الرئيسي */}
+      <div className="flex-1">
+        <div className="flex items-center justify-center">
+          <Image
+            className="flex mt-16 mb-8 text-center h-6 md:h-10 w-auto"
+            src={"/icons/hero.png"}
+            quality={100}
+            height={10000}
+            width={10000}
+            alt={"ToDos"}
+          />
+        </div>
+
+        <form onSubmit={handleSubmit} className="mb-8">
+          <input
+            ref={inputRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Add new todo..."
+            className="w-full p-4 rounded-lg placeholder:text-neutral-600 bg-neutral-800 text-neutral-100 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+          />
+        </form>
+
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={todos} strategy={verticalListSortingStrategy}>
+            <div className="space-y-2 w-full">
+              {todos.map((todo) => (
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onToggle={toggleTodo}
+                  onUpdate={updateTodo}
+                  onDelete={deleteTodo}
+                />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
       </div>
 
-      <form onSubmit={handleSubmit} className="mb-8">
-        <input
-          ref={inputRef}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Add new todo..."
-          className="w-full p-4 rounded-lg placeholder:text-neutral-600 bg-neutral-800 text-neutral-100 focus:outline-none focus:ring-1 focus:ring-neutral-500"
-        />
-      </form>
-
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={todos} strategy={verticalListSortingStrategy}>
-          <div className="space-y-2 w-full">
-            {todos.map((todo) => (
-              <TodoItem
-                key={todo.id}
-                todo={todo}
-                onToggle={toggleTodo}
-                onUpdate={updateTodo}
-                onDelete={deleteTodo}
-              />
-            ))}
-          </div>
-        </SortableContext>
-      </DndContext>
-
-      <div className="mt-8 text-center">
-        <a href="/completed" className="text-blue-400 hover:text-blue-300">
-          View Completed Todos →
-        </a>
+      {/* الرابط فوق الFooter */}
+      <div className="mt-8 text-center py-4 flex justify-center">
+        <button
+          onClick={() => router.push("/completed")}
+          className="text-zinc-400 hover:text-zinc-300 transition-colors duration-200 flex text-center justify-center items-center group mt-4 md:mt-8"
+        >
+          View Completed Todos{" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            width="24"
+            height="22"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="#404045"
+            className="ml-1 transition-transform duration-300 transform group-hover:translate-x-1"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   );
