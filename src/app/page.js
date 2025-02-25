@@ -117,6 +117,7 @@ export default function Home() {
 
         <form onSubmit={handleSubmit} className="mb-8">
           <input
+            data-testid="todo-input"
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -133,6 +134,7 @@ export default function Home() {
             <div className="space-y-2 w-full">
               {todos.map((todo) => (
                 <TodoItem
+                  data-testid={`todo-item-${todo.id}`}
                   key={todo.id}
                   todo={todo}
                   onToggle={toggleTodo}
@@ -148,6 +150,7 @@ export default function Home() {
       {/* الرابط فوق الFooter */}
       <div className="mt-8 text-center py-4 flex justify-center">
         <button
+          data-testid="completed-link"
           onClick={() => router.push("/completed")}
           className="text-zinc-400 hover:text-zinc-300 transition-colors duration-200 flex text-center justify-center items-center group mt-4 md:mt-8"
         >
