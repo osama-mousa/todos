@@ -27,18 +27,17 @@ A modern todo list application with drag-and-drop functionality and beautiful UI
 git clone https://github.com/osama-mousa/todos.git
 ```
 
-Install dependencies:
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-Start development server:
+3. Start development server:
 ```bash
 npm run dev
 ```
 
-##Usage 🎮
-
+## Usage 🎮
 1.Add new tasks using the "+" button
 
 2.Double-click to edit tasks
@@ -51,8 +50,7 @@ npm run dev
 
 6.Toggle dark/light mode in settings
 
-##Contributing 🤝
-
+## Contributing 🤝
 Contributions are welcome! Please follow these steps:
 
 1.Fork the project
@@ -65,5 +63,5 @@ Contributions are welcome! Please follow these steps:
 
 5.Open a Pull Request
 
-##License 📄
+## License 📄
 This project is licensed under the MIT License - see the LICENSE file for details.
