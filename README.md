@@ -64,4 +64,4 @@ Contributions are welcome! Please follow these steps:
 5.Open a Pull Request
 
 ## License 📄
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the [MIT](https://opensource.org/license/MIT) License - see the LICENSE file for details.
