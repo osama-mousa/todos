@@ -2,7 +2,7 @@
 
 A modern todo list application with drag-and-drop functionality and beautiful UI built using Next.js 15 and Tailwind CSS.
 
-![App Preview](https://via.placeholder.com/800x500.png?text=Todo+List+Preview) <!-- Replace with actual screenshot -->
+![App Preview](https://todothings.vercel.app/) <!-- Replace with actual screenshot -->
 
 ## Features ✨
 - 📝 Create, edit, and delete todos
