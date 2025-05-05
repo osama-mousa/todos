@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "ToDos",
-  description: "Next.js Todo Application",
+  description: "Todo List Application",
   manifest: "/manifest.json",
   icons: {
     icon: [
