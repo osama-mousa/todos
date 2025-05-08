@@ -108,6 +108,7 @@ export default function Home() {
           <Image
             className="flex mt-16 mb-8 text-center h-6 md:h-10 w-auto"
             src={"/icons/hero.png"}
+            onContextMenu={(e) => e.preventDefault()}
             quality={100}
             height={10000}
             width={10000}
@@ -160,6 +161,7 @@ export default function Home() {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="#404045"
+            onContextMenu={(e) => e.preventDefault()}
             className="ml-1 transition-transform duration-300 transform group-hover:translate-x-1"
           >
             <path

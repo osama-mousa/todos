@@ -46,6 +46,7 @@ export default function CompletedPage() {
           {completedTodos.length > 0 && (
             <button
               onClick={clearAllCompleted}
+              onContextMenu={(e) => e.preventDefault()}
               className="bg-transparent text-red-400 px-2 sm:px-3 py-2 rounded flex items-center gap-1 sm:gap-2 hover:bg-neutral-800 cursor-pointer whitespace-nowrap flex-shrink-0"
               disabled={completedTodos.length === 0}
             >
@@ -65,6 +66,7 @@ export default function CompletedPage() {
               <div className="flex gap-2">
                 <button
                   onClick={() => restoreTodo(todo.id)}
+                  onContextMenu={(e) => e.preventDefault()}
                   className="relative text-blue-400 hover:text-blue-300 p-2 rounded hover:bg-neutral-600 group"
                 >
                   <ArrowUturnLeftIcon className="w-5 h-5" />
@@ -84,6 +86,7 @@ export default function CompletedPage() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  onContextMenu={(e) => e.preventDefault()}
                   className="h-8 w-8 mx-auto mb-4 text-neutral-600"
                 >
                   <path
