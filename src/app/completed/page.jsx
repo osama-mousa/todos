@@ -40,7 +40,7 @@ export default function CompletedPage() {
       {/* المحتوى الرئيسي */}
       <div className="flex-1">
         <div className="flex justify-between items-center mb-8 w-full gap-2 sm:gap-4">
-          <h1 className="text-lg sm:text-3xl font-bold flex-shrink-0">
+          <h1 className="text-lg sm:text-3xl font-extralight flex-shrink-0">
             Completed Todos
           </h1>
           {completedTodos.length > 0 && (
@@ -67,7 +67,7 @@ export default function CompletedPage() {
                 <button
                   onClick={() => restoreTodo(todo.id)}
                   onContextMenu={(e) => e.preventDefault()}
-                  className="relative text-blue-400 hover:text-blue-300 p-2 rounded hover:bg-neutral-600 group"
+                  className="relative text-green-300 hover:text-green-200 p-2 rounded hover:bg-neutral-600 group"
                 >
                   <ArrowUturnLeftIcon className="w-5 h-5" />
                   <span className="hidden md:inline-block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-black text-xs text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-lg">
