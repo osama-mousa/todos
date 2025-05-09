@@ -4,6 +4,7 @@ import { getTodos, saveTodos } from "@/lib/todos";
 import { ArrowUturnLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function CompletedPage() {
   const [completedTodos, setCompletedTodos] = useState([]);
@@ -35,13 +36,15 @@ export default function CompletedPage() {
     setCompletedTodos(getTodos().filter((todo) => todo.completed));
   }, []);
 
+  const t = useTranslations();
+
   return (
     <div className="w-full max-w-2xl min-h-[80vh] flex flex-col p-4 font-sans">
       {/* المحتوى الرئيسي */}
       <div className="flex-1">
         <div className="flex justify-between items-center mb-8 w-full gap-2 sm:gap-4">
           <h1 className="text-lg sm:text-3xl font-extralight flex-shrink-0">
-            Completed Todos
+            {t("CompletedTodos")}
           </h1>
           {completedTodos.length > 0 && (
             <button
@@ -51,7 +54,9 @@ export default function CompletedPage() {
               disabled={completedTodos.length === 0}
             >
               <TrashIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="text-sm sm:text-base sm:inline">Clear All</span>
+              <span className="text-sm sm:text-base sm:inline">
+                {t("ClearAll")}
+              </span>
             </button>
           )}
         </div>
@@ -71,7 +76,7 @@ export default function CompletedPage() {
                 >
                   <ArrowUturnLeftIcon className="w-5 h-5" />
                   <span className="hidden md:inline-block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-black text-xs text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-lg">
-                    Restore Todo
+                    {t("RestoreTodo")}
                   </span>
                 </button>
               </div>
@@ -97,10 +102,10 @@ export default function CompletedPage() {
                   />
                 </svg>
                 <p className="text-lg sm:text-xl text-neutral-600">
-                  No completed tasks yet
+                  {t("Nocompletedtasksyet")}
                 </p>
                 <p className="text-sm sm:text-base mt-2 text-neutral-600">
-                  Complete some todos to see them here
+                  {t("Completesometodostoseethemhere")}
                 </p>
               </div>
             </div>
@@ -130,7 +135,7 @@ export default function CompletedPage() {
               d="M15.75 19.5 8.25 12l7.5-7.5"
             />
           </svg>
-          Back to Active Todos
+          {t("BacktoActiveTodos")}
         </button>
       </div>
     </div>

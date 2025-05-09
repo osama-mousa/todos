@@ -10,6 +10,7 @@ import TodoItem from "@/components/TodoItem";
 import { saveTodos, getTodos } from "@/lib/todos";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
   const router = useRouter();
@@ -100,6 +101,8 @@ export default function Home() {
     }
   };
 
+  const t = useTranslations();
+
   return (
     <div className="w-full max-w-2xl min-h-[80vh] flex flex-col font-sans">
       {/* المحتوى الرئيسي */}
@@ -121,7 +124,7 @@ export default function Home() {
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Add new todo..."
+            placeholder={t('Addnewtodo')}
             className="w-full p-4 rounded-lg placeholder:text-neutral-600 bg-neutral-800 text-neutral-100 focus:outline-none focus:ring-1 focus:ring-neutral-500"
           />
         </form>
@@ -152,7 +155,7 @@ export default function Home() {
           onClick={() => router.push("/completed")}
           className="text-zinc-400 hover:text-zinc-300 transition-colors duration-200 flex text-center justify-center items-center group mt-4 md:mt-8"
         >
-          View Completed Todos{" "}
+          {t('ViewCompletedTodos')}{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

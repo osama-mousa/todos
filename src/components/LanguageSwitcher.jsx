@@ -83,6 +83,8 @@ export default function LanguageSwitcher() {
             strokeLinecap="round"
             strokeLinejoin="round"
             className="text-white hover:text-gray-50"
+            onContextMenu={(e) => e.preventDefault()}
+
           >
             <path d="m5 8 6 6" />
             <path d="m4 14 6-6 2-3" />
