@@ -1,5 +1,7 @@
 import Footer from "@/components/Footer";
 import "./globals.css";
+import { NextIntlClientProvider } from "next-intl";
+import {getLocale} from 'next-intl/server';
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import DonateButton from "@/components/DonateButton";
@@ -25,21 +27,24 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const locale = await getLocale();
   return (
-    <html lang="en" className="dark">
+    <html lang={locale} className="dark">
       <body
         className={`${inter.className} dark:bg-neutral-900 dark:text-neutral-100 custom-scrollbar`}
       >
-        <div className="min-h-screen flex flex-col">
-          <main className="flex-1 p-4 flex flex-col items-center">
-            {children}
-            <LanguageSwitcher />
-            <DonateButton />
-            <Analytics />
-          </main>
-          <Footer />
-        </div>
+        <NextIntlClientProvider>
+          <div className="min-h-screen flex flex-col">
+            <main className="flex-1 p-4 flex flex-col items-center">
+              {children}
+              <LanguageSwitcher />
+              <DonateButton />
+              <Analytics />
+            </main>
+            <Footer />
+          </div>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
