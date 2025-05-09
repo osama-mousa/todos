@@ -1,0 +1,19 @@
+{
+    "Addnewtodo":"Add new todo...",
+    "ViewCompletedTodos":"Completed Todos",
+    "Done":"Done",
+    "Info":"Info",
+    "Actions":"Actions",
+    "Created":"Created",
+    "Updated":"Updated",
+    "Edit":"Edit",
+    "Delete":"Delete",
+    "CompletedTodos":"Completed Todos",
+    "ClearAll":"Clear All",
+    "RestoreTodo":"Restore Todo",
+    "Nocompletedtasksyet":"No completed tasks yet",
+    "Completesometodostoseethemhere":"Complete some todos to see them here",
+    "BacktoActiveTodos":"Active Todos",
+    "Developedby": "Developed by"
+
+}

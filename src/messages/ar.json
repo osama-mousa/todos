@@ -1,0 +1,18 @@
+{
+    "Addnewtodo": "... أضف مهمة جديدة",
+    "ViewCompletedTodos": "المهام المكتملة",
+    "Done": "تم",
+    "Info": "معلومات",
+    "Actions": "إجراءات",
+    "Created": "تاريخ الإنشاء",
+    "Updated": "تاريخ التحديث",
+    "Edit": "تعديل",
+    "Delete": "حذف",
+    "CompletedTodos": "المهام المكتملة",
+    "ClearAll": "مسح الكل",
+    "RestoreTodo": "استعادة المهمة",
+    "Nocompletedtasksyet": "لا توجد مهام مكتملة بعد",
+    "Completesometodostoseethemhere": "أكمل بعض المهام لتظهر هنا",
+    "BacktoActiveTodos": "المهام النشطة",
+    "Developedby": "تم التطوير بواسطة"
+}

@@ -1,0 +1,19 @@
+{
+    "Addnewtodo": "Yeni görev ekle...",
+    "ViewCompletedTodos": "Tamamlanan Görevler",
+    "Done": "Tamamlandı",
+    "Info": "Bilgi",
+    "Actions": "Eylemler",
+    "Created": "Oluşturuldu",
+    "Updated": "Güncellendi",
+    "Edit": "Düzenle",
+    "Delete": "Sil",
+    "CompletedTodos": "Tamamlanan Görevler",
+    "ClearAll": "Tümünü Temizle",
+    "RestoreTodo": "Görevi Geri Yükle",
+    "Nocompletedtasksyet": "Henüz tamamlanan görev yok",
+    "Completesometodostoseethemhere": "Burada görmek için bazı görevleri tamamlayın",
+    "BacktoActiveTodos": "Aktif Görevlere Dön",
+    "Developedby": "Geliştiren"
+  }
+  
