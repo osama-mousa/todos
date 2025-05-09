@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import DonateButton from "@/components/DonateButton";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
         <div className="min-h-screen flex flex-col">
           <main className="flex-1 p-4 flex flex-col items-center">
             {children}
+            <LanguageSwitcher />
             <DonateButton />
             <Analytics />
           </main>
