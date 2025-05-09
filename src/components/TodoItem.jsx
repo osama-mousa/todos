@@ -85,7 +85,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       style={style}
       {...attributes}
       className={`flex items-center justify-between p-4 bg-neutral-800 rounded-lg relative mb-2
-      hover:bg-zinc-800 transition-transform duration-150 font-sans ${
+      hover:bg-[#272727] transition-transform duration-150 font-sans ${
         isDragging ? "shadow-xl z-50 scale-105" : "shadow-none"
       } ${isMenuOpen ? "z-[70]" : showInfo ? "z-[60]" : ""} 
       ${
