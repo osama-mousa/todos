@@ -157,6 +157,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           {editing ? (
             <input
               value={editText}
+              dir="auto"
               onChange={(e) => setEditText(e.target.value)}
               onBlur={handleUpdate}
               onKeyDown={(e) => e.key === "Enter" && handleUpdate()}
@@ -165,6 +166,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
             />
           ) : (
             <span
+              dir="auto"
               className={`block break-words break-all overflow-hidden ${
                 localCompleted
                   ? "line-through text-neutral-400"
