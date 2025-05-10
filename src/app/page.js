@@ -10,7 +10,7 @@ import TodoItem from "@/components/TodoItem";
 import { saveTodos, getTodos } from "@/lib/todos";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 export default function Home() {
   const router = useRouter();
@@ -22,6 +22,16 @@ export default function Home() {
     setTodos(getTodos().filter((todo) => !todo.completed));
   }, []);
 
+  const formatDateTime = (date) => {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    return `${day}/${month}/${year} - ${hours}:${minutes}`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -31,7 +41,7 @@ export default function Home() {
       id: Date.now(),
       text: input.trim(),
       completed: false,
-      createdAt: new Date().toISOString(),
+      createdAt: formatDateTime(new Date()),
       updatedAt: null,
       order: allTodos.length,
     };
@@ -49,8 +59,8 @@ export default function Home() {
         return {
           ...todo,
           completed: !todo.completed,
-          completedAt: !todo.completed ? new Date().toISOString() : null,
-          updatedAt: new Date().toISOString(),
+          completedAt: !todo.completed ? formatDateTime(new Date()) : null,
+          updatedAt: formatDateTime(new Date()),
         };
       }
       return todo;
@@ -72,7 +82,7 @@ export default function Home() {
         ? {
             ...todo,
             text: newText.trim(),
-            updatedAt: new Date().toISOString(),
+            updatedAt: formatDateTime(new Date()),
           }
         : todo
     );
@@ -124,7 +134,7 @@ export default function Home() {
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={t('Addnewtodo')}
+            placeholder={t("Addnewtodo")}
             dir="auto"
             className="w-full p-4 rounded-lg placeholder:text-neutral-600 bg-neutral-800 text-neutral-100 focus:outline-none focus:ring-1 focus:ring-neutral-500"
           />
@@ -156,7 +166,7 @@ export default function Home() {
           onClick={() => router.push("/completed")}
           className="text-zinc-400 hover:text-zinc-300 transition-colors duration-200 flex text-center justify-center items-center group mt-4 md:mt-8"
         >
-          {t('ViewCompletedTodos')}{" "}
+          {t("ViewCompletedTodos")}{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
