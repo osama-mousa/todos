@@ -157,6 +157,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           {editing ? (
             <input
               value={editText}
+              dir="auto"
               onChange={(e) => setEditText(e.target.value)}
               onBlur={handleUpdate}
               onKeyDown={(e) => e.key === "Enter" && handleUpdate()}
@@ -165,6 +166,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
             />
           ) : (
             <span
+              dir="auto"
               className={`block break-words break-all overflow-hidden ${
                 localCompleted
                   ? "line-through text-neutral-400"
@@ -285,18 +287,18 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-neutral-400">{t("Created")}:</span>
-              <span>{new Date(todo.createdAt).toLocaleString()}</span>
+              <span>{todo.createdAt}</span>
             </div>
             {todo.updatedAt && (
               <div className="flex justify-between">
                 <span className="text-neutral-400">{t("Updated")}:</span>
-                <span>{new Date(todo.updatedAt).toLocaleString()}</span>
+                <span>{todo.updatedAt}</span>
               </div>
             )}
             {todo.completedAt && (
               <div className="flex justify-between">
                 <span className="text-neutral-400">{t("Completed")}:</span>
-                <span>{new Date(todo.completedAt).toLocaleString()}</span>
+                <span>{todo.completedAt}</span>
               </div>
             )}
           </div>

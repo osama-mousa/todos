@@ -24,7 +24,6 @@ export default function LanguageSwitcher() {
         setOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -38,7 +37,7 @@ export default function LanguageSwitcher() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.1 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
             onClick={() => setOpen(false)}
             className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
           />
@@ -55,10 +54,15 @@ export default function LanguageSwitcher() {
             languages.map((lang, index) => (
               <motion.button
                 key={lang.code}
+                layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: index * 0.05 }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeInOut",
+                  delay: index * 0.05,
+                }}
                 onClick={() => changeLanguage(lang.code)}
                 className="mb-2 h-10 w-10 rounded-full bg-white text-black hover:bg-gray-200 transition text-sm font-semibold shadow"
               >
@@ -68,9 +72,11 @@ export default function LanguageSwitcher() {
         </AnimatePresence>
 
         {/* الزر الرئيسي */}
-        <button
+        <motion.button
+          layout
           onClick={() => setOpen(!open)}
           className="relative flex items-center justify-center h-12 w-12 md:h-14 md:w-14 rounded-full bg-neutral-500 opacity-10 hover:opacity-40 transition-opacity"
+          whileTap={{ scale: 0.95 }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -82,9 +88,7 @@ export default function LanguageSwitcher() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-white hover:text-gray-50"
             onContextMenu={(e) => e.preventDefault()}
-
           >
             <path d="m5 8 6 6" />
             <path d="m4 14 6-6 2-3" />
@@ -93,7 +97,7 @@ export default function LanguageSwitcher() {
             <path d="m22 22-5-10-5 10" />
             <path d="M14 18h6" />
           </svg>
-        </button>
+        </motion.button>
       </div>
     </>
   );
