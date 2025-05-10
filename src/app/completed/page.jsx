@@ -67,7 +67,7 @@ export default function CompletedPage() {
               key={todo.id}
               className="flex items-center justify-between px-4 py-2 bg-neutral-800 rounded-lg hover:bg-neutral-700 transition-colors"
             >
-              <span className="line-through text-neutral-400">{todo.text}</span>
+              <span className="line-through break-all text-neutral-400">{todo.text}</span>
               <div className="flex gap-2">
                 <button
                   onClick={() => restoreTodo(todo.id)}
