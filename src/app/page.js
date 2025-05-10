@@ -10,6 +10,7 @@ import TodoItem from "@/components/TodoItem";
 import { saveTodos, getTodos } from "@/lib/todos";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
   const router = useRouter();
@@ -21,6 +22,16 @@ export default function Home() {
     setTodos(getTodos().filter((todo) => !todo.completed));
   }, []);
 
+  const formatDateTime = (date) => {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    return `${day}/${month}/${year} - ${hours}:${minutes}`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -30,7 +41,7 @@ export default function Home() {
       id: Date.now(),
       text: input.trim(),
       completed: false,
-      createdAt: new Date().toISOString(),
+      createdAt: formatDateTime(new Date()),
       updatedAt: null,
       order: allTodos.length,
     };
@@ -48,8 +59,8 @@ export default function Home() {
         return {
           ...todo,
           completed: !todo.completed,
-          completedAt: !todo.completed ? new Date().toISOString() : null,
-          updatedAt: new Date().toISOString(),
+          completedAt: !todo.completed ? formatDateTime(new Date()) : null,
+          updatedAt: formatDateTime(new Date()),
         };
       }
       return todo;
@@ -71,7 +82,7 @@ export default function Home() {
         ? {
             ...todo,
             text: newText.trim(),
-            updatedAt: new Date().toISOString(),
+            updatedAt: formatDateTime(new Date()),
           }
         : todo
     );
@@ -100,6 +111,8 @@ export default function Home() {
     }
   };
 
+  const t = useTranslations();
+
   return (
     <div className="w-full max-w-2xl min-h-[80vh] flex flex-col font-sans">
       {/* المحتوى الرئيسي */}
@@ -108,6 +121,7 @@ export default function Home() {
           <Image
             className="flex mt-16 mb-8 text-center h-6 md:h-10 w-auto"
             src={"/icons/hero.png"}
+            onContextMenu={(e) => e.preventDefault()}
             quality={100}
             height={10000}
             width={10000}
@@ -121,7 +135,8 @@ export default function Home() {
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Add new todo..."
+            placeholder={t("Addnewtodo")}
+            dir="auto"
             className="w-full p-4 rounded-lg placeholder:text-neutral-600 bg-neutral-800 text-neutral-100 focus:outline-none focus:ring-1 focus:ring-neutral-500"
           />
         </form>
@@ -154,7 +169,7 @@ export default function Home() {
           onClick={() => router.push("/completed")}
           className="text-zinc-400 hover:text-zinc-300 transition-colors duration-200 flex text-center justify-center items-center group mt-4 md:mt-8"
         >
-          View Completed Todos{" "}
+          {t("ViewCompletedTodos")}{" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -163,6 +178,7 @@ export default function Home() {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="#404045"
+            onContextMenu={(e) => e.preventDefault()}
             className="ml-1 transition-transform duration-300 transform group-hover:translate-x-1"
           >
             <path

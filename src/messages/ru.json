@@ -1,0 +1,19 @@
+{
+    "Addnewtodo": "Добавить новую задачу...",
+    "ViewCompletedTodos": "Завершённые задачи",
+    "Done": "Готово",
+    "Info": "Информация",
+    "Actions": "Действия",
+    "Created": "Создано",
+    "Updated": "Обновлено",
+    "Edit": "Редактировать",
+    "Delete": "Удалить",
+    "CompletedTodos": "Завершённые задачи",
+    "ClearAll": "Очистить всё",
+    "RestoreTodo": "Восстановить задачу",
+    "Nocompletedtasksyet": "Пока нет завершённых задач",
+    "Completesometodostoseethemhere": "Завершите задачи, чтобы увидеть их здесь",
+    "BacktoActiveTodos": "Активные задачи",
+    "Developedby": "Разработано"
+  }
+  

@@ -10,6 +10,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { Menu, Transition } from "@headlessui/react";
+import { useTranslations } from "next-intl";
 
 export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
   const [editing, setEditing] = useState(false);
@@ -76,13 +77,15 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
     }, 1000);
   };
 
+  const t = useTranslations();
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       {...attributes}
       className={`flex items-center justify-between p-4 bg-neutral-800 rounded-lg relative mb-2
-      hover:bg-zinc-800 transition-transform duration-150 font-sans ${
+      hover:bg-[#272727] transition-transform duration-150 font-sans ${
         isDragging ? "shadow-xl z-50 scale-105" : "shadow-none"
       } ${isMenuOpen ? "z-[70]" : showInfo ? "z-[60]" : ""} 
       ${
@@ -127,7 +130,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
           transition-opacity duration-200 pointer-events-none"
           >
-            Done
+            {t("Done")}
           </span>
           <div
             className={`w-5 h-5 rounded border-2 flex items-center justify-center
@@ -157,6 +160,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
             <input
               data-testid="edit-input"
               value={editText}
+              dir="auto"
               onChange={(e) => setEditText(e.target.value)}
               onBlur={handleUpdate}
               onKeyDown={(e) => e.key === "Enter" && handleUpdate()}
@@ -165,8 +169,8 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
             />
           ) : (
             <span
-              data-testid="todo-text"
-              className={`block break-words overflow-hidden ${
+              dir="auto"
+              className={`block break-words break-all overflow-hidden ${
                 localCompleted
                   ? "line-through text-neutral-400"
                   : "text-neutral-100"
@@ -194,7 +198,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
           transition-opacity duration-200 pointer-events-none"
           >
-            Info
+            {t("Info")}
           </span>
         </button>
 
@@ -212,7 +216,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
           transition-opacity duration-200 pointer-events-none"
                 >
-                  Actions
+                  {t("Actions")}
                 </span>
               </Menu.Button>
 
@@ -238,7 +242,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
                         } w-full px-4 py-3 text-left rounded-t-lg flex items-center gap-2`}
                       >
                         <PencilIcon className="w-4 h-4" />
-                        Edit
+                        {t("Edit")}
                       </button>
                     )}
                   </Menu.Item>
@@ -252,7 +256,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
                         } w-full px-4 py-3 text-left rounded-b-lg text-red-400 flex items-center gap-2`}
                       >
                         <TrashIcon className="w-4 h-4" />
-                        Delete
+                        {t("Delete")}
                       </button>
                     )}
                   </Menu.Item>
@@ -293,19 +297,19 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           </button>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-neutral-400">Created:</span>
-              <span>{new Date(todo.createdAt).toLocaleString()}</span>
+              <span className="text-neutral-400">{t("Created")}:</span>
+              <span>{todo.createdAt}</span>
             </div>
             {todo.updatedAt && (
               <div className="flex justify-between">
-                <span className="text-neutral-400">Updated:</span>
-                <span>{new Date(todo.updatedAt).toLocaleString()}</span>
+                <span className="text-neutral-400">{t("Updated")}:</span>
+                <span>{todo.updatedAt}</span>
               </div>
             )}
             {todo.completedAt && (
               <div className="flex justify-between">
-                <span className="text-neutral-400">Completed:</span>
-                <span>{new Date(todo.completedAt).toLocaleString()}</span>
+                <span className="text-neutral-400">{t("Completed")}:</span>
+                <span>{todo.completedAt}</span>
               </div>
             )}
           </div>
