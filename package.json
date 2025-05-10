@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "cy:run": "cypress run",
+    "test": "cypress run",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
