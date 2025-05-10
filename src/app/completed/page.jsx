@@ -48,6 +48,7 @@ export default function CompletedPage() {
           </h1>
           {completedTodos.length > 0 && (
             <button
+              data-testid="clear-all-button"
               onClick={clearAllCompleted}
               onContextMenu={(e) => e.preventDefault()}
               className="bg-transparent text-red-400 px-2 sm:px-3 py-2 rounded flex items-center gap-1 sm:gap-2 hover:bg-neutral-800 cursor-pointer whitespace-nowrap flex-shrink-0"
@@ -61,15 +62,19 @@ export default function CompletedPage() {
           )}
         </div>
 
-        <div className="space-y-2">
+        <div data-testid="completed-list" className="space-y-2">
           {completedTodos.map((todo) => (
             <div
               key={todo.id}
+              data-testid={`completed-item-${todo.id}`}
               className="flex items-center justify-between px-4 py-2 bg-neutral-800 rounded-lg hover:bg-neutral-700 transition-colors"
             >
-              <span className="line-through break-all text-neutral-400">{todo.text}</span>
+              <span className="line-through break-all text-neutral-400">
+                {todo.text}
+              </span>
               <div className="flex gap-2">
                 <button
+                  data-testid="restore-button"
                   onClick={() => restoreTodo(todo.id)}
                   onContextMenu={(e) => e.preventDefault()}
                   className="relative text-green-300 hover:text-green-200 p-2 rounded hover:bg-neutral-600 group"
@@ -84,7 +89,10 @@ export default function CompletedPage() {
           ))}
 
           {completedTodos.length === 0 && (
-            <div className="flex items-center justify-center h-[60vh]">
+            <div
+              data-testid="empty-state"
+              className="flex items-center justify-center h-[60vh]"
+            >
               <div className="text-center p-4 text-neutral-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -116,6 +124,7 @@ export default function CompletedPage() {
       {/* زر العودة */}
       <div className="mt-8 text-center">
         <button
+          data-testid="back-link"
           onClick={() => router.push("/")}
           className="text-zinc-400 hover:text-zinc-300 transition-colors duration-200 flex items-center justify-center w-full group"
         >

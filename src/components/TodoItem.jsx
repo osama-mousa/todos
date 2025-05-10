@@ -97,6 +97,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       {/* Drag Handle and Checkbox */}
       <div className="flex items-center gap-3 flex-1">
         <button
+          data-testid="drag-handle"
           {...listeners}
           aria-label="Drag handle"
           className="handle cursor-grab active:cursor-grabbing p-2 hover:bg-neutral-700 rounded-md touch-pan-x"
@@ -111,6 +112,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
 
         <label className="relative flex items-center group cursor-pointer">
           <input
+            data-testid="todo-checkbox"
             type="checkbox"
             checked={localCompleted}
             onChange={handleToggle}
@@ -156,6 +158,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
         <div className="flex-1 min-w-0">
           {editing ? (
             <input
+              data-testid="edit-input"
               value={editText}
               dir="auto"
               onChange={(e) => setEditText(e.target.value)}
@@ -183,6 +186,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       {/* Action Buttons */}
       <div className="flex items-center gap-3 ml-4">
         <button
+          data-testid="info-button"
           ref={infoButtonRef}
           onClick={() => setShowInfo(!showInfo)}
           className="text-neutral-400 hover:text-white relative group"
@@ -202,6 +206,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           {({ open }) => (
             <>
               <Menu.Button
+                data-testid="menu-button"
                 className="text-neutral-400 hover:text-white group"
                 aria-label="Task actions"
               >
@@ -223,10 +228,14 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
                 leaveFrom="transform scale-100 opacity-100"
                 leaveTo="transform scale-95 opacity-0"
               >
-                <Menu.Items className="absolute right-0 bottom-full mb-2 w-48 bg-neutral-800 rounded-lg shadow-lg z-[80] focus:outline-none border border-neutral-700">
+                <Menu.Items
+                  data-testid="action-menu"
+                  className="absolute right-0 bottom-full mb-2 w-48 bg-neutral-800 rounded-lg shadow-lg z-[80] focus:outline-none border border-neutral-700"
+                >
                   <Menu.Item>
                     {({ active }) => (
                       <button
+                        data-testid="edit-menu-button"
                         onClick={() => setEditing(true)}
                         className={`${
                           active ? "bg-neutral-700" : ""
@@ -240,6 +249,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
+                        data-testid="delete-menu-button"
                         onClick={() => onDelete(todo.id)}
                         className={`${
                           active ? "bg-neutral-700" : ""
@@ -261,6 +271,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
       {/* Information Panel */}
       {showInfo && (
         <div
+          data-testid="info-panel"
           ref={infoRef}
           className={`absolute top-full left-0 w-full p-4 bg-neutral-800 rounded-lg mt-2 shadow-xl border border-neutral-700
            ${isExiting ? "z-[50] opacity-70" : "z-[70] opacity-100"}`}
