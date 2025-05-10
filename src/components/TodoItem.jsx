@@ -10,7 +10,7 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { Menu, Transition } from "@headlessui/react";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 
 export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
   const [editing, setEditing] = useState(false);
@@ -128,7 +128,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
           transition-opacity duration-200 pointer-events-none"
           >
-            {t('Done')}
+            {t("Done")}
           </span>
           <div
             className={`w-5 h-5 rounded border-2 flex items-center justify-center
@@ -165,7 +165,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
             />
           ) : (
             <span
-              className={`block break-words overflow-hidden ${
+              className={`block break-words break-all overflow-hidden ${
                 localCompleted
                   ? "line-through text-neutral-400"
                   : "text-neutral-100"
@@ -192,7 +192,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
           transition-opacity duration-200 pointer-events-none"
           >
-            {t('Info')}
+            {t("Info")}
           </span>
         </button>
 
@@ -209,7 +209,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           bg-neutral-950 text-xs text-white rounded-lg opacity-0 group-hover:opacity-100 
           transition-opacity duration-200 pointer-events-none"
                 >
-                  {t('Actions')}
+                  {t("Actions")}
                 </span>
               </Menu.Button>
 
@@ -231,7 +231,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
                         } w-full px-4 py-3 text-left rounded-t-lg flex items-center gap-2`}
                       >
                         <PencilIcon className="w-4 h-4" />
-                        {t('Edit')}
+                        {t("Edit")}
                       </button>
                     )}
                   </Menu.Item>
@@ -244,7 +244,7 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
                         } w-full px-4 py-3 text-left rounded-b-lg text-red-400 flex items-center gap-2`}
                       >
                         <TrashIcon className="w-4 h-4" />
-                        {t('Delete')}
+                        {t("Delete")}
                       </button>
                     )}
                   </Menu.Item>
@@ -284,18 +284,18 @@ export default function TodoItem({ todo, onToggle, onUpdate, onDelete }) {
           </button>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-neutral-400">{t('Created')}:</span>
+              <span className="text-neutral-400">{t("Created")}:</span>
               <span>{new Date(todo.createdAt).toLocaleString()}</span>
             </div>
             {todo.updatedAt && (
               <div className="flex justify-between">
-                <span className="text-neutral-400">{t('Updated')}:</span>
+                <span className="text-neutral-400">{t("Updated")}:</span>
                 <span>{new Date(todo.updatedAt).toLocaleString()}</span>
               </div>
             )}
             {todo.completedAt && (
               <div className="flex justify-between">
-                <span className="text-neutral-400">{t('Completed')}:</span>
+                <span className="text-neutral-400">{t("Completed")}:</span>
                 <span>{new Date(todo.completedAt).toLocaleString()}</span>
               </div>
             )}
